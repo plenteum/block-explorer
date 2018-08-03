@@ -10,7 +10,8 @@ var refreshDelay = 30000;
 var networkStat = {
  "ple": [
 	["plenteum.miner.care", "http://85.216.148.43:8110"],
-	["crypto9coin.cf/ple", "https://crypto9coin.cf:44019"]
+    ["crypto9coin.cf/ple", "https://crypto9coin.cf:44019"],
+    ["getpool.org/ple", "https://api.getpool.org/rpc/ple/"]
  ]
 };
 

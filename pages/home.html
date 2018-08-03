@@ -375,11 +375,11 @@ $('#goto-height').keyup(function(e){
 		var dateTime = new Date(block.timestamp * 1000).toISOString();
 		row.setAttribute('data-dt', dateTime);
         var columns =
-            '<td>' + localizeNumber(block.height) + '</td>' +
+            '<td class="h">' + localizeNumber(block.height) + '</td>' +
 			'<td>' + localizeNumber(block.cumul_size) + '</td>' +
 			'<td>' + formatBlockLink(block.hash) + '</td>' +
             '<td class="blk-diff">' + localizeNumber(block.difficulty) + '</td>' + 
-            '<td>' + localizeNumber(block.tx_count) + '</td>' +
+            '<td class="txses">' + localizeNumber(block.tx_count) + '</td>' +
             '<td class="date-time">' + formatDate(block.timestamp) + ' (<time class="timeago" datetime="'+dateTime+'"></time>)</td>';
 
 		Difficulties.push(parseInt(block.difficulty));
@@ -453,7 +453,7 @@ $('#goto-height').keyup(function(e){
 
 	}
 	
-//  Turtle MemPool Transactions
+//  Plenteum MemPool Transactions
 function getPoolTransactions(){
 
 var xhrGetPool = $.ajax({
@@ -745,10 +745,10 @@ function refreshChart() {
 		txsnr   = [];
 		for (var i = 0; i < brows.length; i++) {
 			var row = $(brows[i]);
-			var label  = parseInt(row.find('td:first').text());
-			var diff   = parseInt(row.find('td.blk-diff').text());
-			var txses  = parseInt(row.find('td:last').text());
-			var size   = parseInt(row.find('td:nth-child(3)').text());
+            var label = parseInt(row.find('td:first').text().replace(/[, ]+/g, '').trim());
+            var diff = parseInt(row.find('td.blk-diff').text().replace(/[, ]+/g, '').trim());
+            var txses = parseInt(row.find('td.txses').text().replace(/[, ]+/g, '').trim());
+            var size = parseInt(row.find('td:nth-child(2)').text().replace(/[, ]+/g, '').trim());
 			var time   = row.attr('data-dt');
 			
 				labels.push(label);
