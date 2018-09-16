@@ -15,7 +15,6 @@ var networkStat = {
      ["getpool.org/ple", "https://api.getpool.org/rpc/ple/"],
      ["ple.optimusblue.com", "http://ple.optimusblue.com:8117"],
      ["plenteum.virtopia.ca", "https://ple.virtopia.ca"],
-	 ["45.199.183.128","http://45.199.183.128:8117"],
      ["ple.cnpool.vip", "https://www.cnpool.vip:9249"],
      ["plenteum.clevery.xyz", "https://plenteum.clevery.xyz/api/"]
  ]
