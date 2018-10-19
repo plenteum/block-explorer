@@ -447,9 +447,9 @@ $('#goto-height').keyup(function(e){
 		var avgDiff = Math.round(sum / Difficulties.length);
 		var avgHashRate = avgDiff / blockTargetInterval;
 		
-		//updateText('avgDifficulty', getReadableDifficultyString(avgDiff, 0).toString());
-		//updateText('avgHashrate', getReadableHashRateString(avgDiff / blockTargetInterval));
-        // updateText('blockSolveTime', getReadableTime(lastStats.difficulty / avgHashRate)); Add back after timestamp is added to mempool
+		updateText('avgDifficulty', getReadableDifficultyString(avgDiff, 0).toString());
+		updateText('avgHashrate', getReadableHashRateString(avgDiff / blockTargetInterval));
+        //updateText('blockSolveTime', getReadableTime(lastStats.difficulty / avgHashRate)); Add back after timestamp is added to mempool
 
 	}
 	

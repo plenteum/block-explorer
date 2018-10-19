@@ -16,7 +16,9 @@ var networkStat = {
      ["ple.optimusblue.com", "http://ple.optimusblue.com:8117"],
      ["plenteum.virtopia.ca", "https://ple.virtopia.ca"],
      ["ple.cnpool.vip", "https://www.cnpool.vip:9249"],
-     ["plenteum.clevery.xyz", "https://plenteum.clevery.xyz/api/"]
+     ["plenteum.clevery.xyz", "https://plenteum.clevery.xyz/api/"],
+	 ["plenteumpool.xyz", "https://plenteumpool.xyz/api"],
+	 ["ple.llama.horse","http://pool.llama.horse:44018"]
  ]
 };
 
