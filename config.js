@@ -18,7 +18,9 @@ var networkStat = {
      ["ple.cnpool.vip", "https://www.cnpool.vip:9249"],
      ["plenteum.clevery.xyz", "https://plenteum.clevery.xyz/api/"],
 	 ["plenteumpool.xyz", "https://plenteumpool.xyz/api"],
-	 ["ple.llama.horse","http://pool.llama.horse:44018"]
+     ["ple.llama.horse", "http://pool.llama.horse:44018"],
+     ["the-miners.de/plenteum", "http://173.212.249.18:8112"],
+     ["ple.cnhub.de", "http://ple.cnhub.de:18117"]
  ]
 };
 
