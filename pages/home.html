@@ -13,18 +13,19 @@
                         <li><i class="fa fa-certificate"></i> Reward: <span id="currentReward"></span></li>
                         <li><i class="fa fa-money"></i> Supply: <span id="totalCoins"></span></li>
                         <li><i class="fa fa-percent" aria-hidden="true"></i> Emission: <span id="emissionPercent"></span> %</li>
-                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" data-original-title="DustFund balance will begin to accumulate at approximately block 65500."><i class="fa fa-box-usd" aria-hidden="true"></i> DustFund: <span id="dustFundBalance"></span></a></li>
+                        <li><a href="#" data-toggle="tooltip" data-placement="bottom" data-original-title="Future mining reward fund"><i class="fa fa-box-usd" aria-hidden="true"></i> DustFund: <span id="dustFundBalance"></span> PLE</a></li>
                     </ul>
 				</div>
 				<div class="col-sm-6 col-md-6">
-					<ul class="nav nav-pills nav-stacked">
-						<li><i class="fa fa-unlock-alt"></i> Difficulty: <span id="networkDifficulty"></span></li>
-						<li><i class="fa fa-lock"></i> Average Difficulty: <span id="avgDifficulty"></span></li>
-						<li><i class="fa fa-tachometer"></i> Hash Rate: <span id="networkHashrate"></span></li>
-						<li><i class="fa fa-clock-o"></i> Average Hash Rate: <span id="avgHashrate"></span></li>
-						<!-- <li><a href="#" data-toggle="tooltip" data-placement="bottom" data-original-title="Estimated block solve time at estimated network speed and current difficulty."><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Solve time: <span id="blockSolveTime"></span></a></li> -->
-					
-					</ul>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><i class="fa fa-unlock-alt"></i> Difficulty: <span id="networkDifficulty"></span></li>
+                        <li><i class="fa fa-lock"></i> Average Difficulty: <span id="avgDifficulty"></span></li>
+                        <li><i class="fa fa-tachometer"></i> Hash Rate: <span id="networkHashrate"></span></li>
+                        <li><i class="fa fa-clock-o"></i> Average Hash Rate: <span id="avgHashrate"></span></li>
+                        <li><i class="fa fa-clock-o"></i> Next fork: <span id="nextFork"></span></li>
+                        <!-- <li><a href="#" data-toggle="tooltip" data-placement="bottom" data-original-title="Estimated block solve time at estimated network speed and current difficulty."><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Solve time: <span id="blockSolveTime"></span></a></li> -->
+
+                    </ul>
 				</div>
 			</div>
 			
@@ -152,6 +153,10 @@ currentPage = {
         update: function(){
 			renderLastBlock();
             updateText('networkHeight', localizeNumber(lastStats.height.toString()));
+
+            var forkDate = new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate(), (new Date()).getHours(), (new Date()).getMinutes() + ((130000 - lastStats.height) * 2));
+
+            updateText('nextFork', lastStats.last_known_block_index < 130001 ? forkDate.toString() : "to be announced...");
             updateText('networkTransactions', localizeNumber(lastStats.tx_count.toString()));
             updateText('networkHashrate', getReadableHashRateString(lastStats.difficulty / blockTargetInterval));
             updateText('networkDifficulty', getReadableDifficultyString(lastStats.difficulty, 0).toString());
@@ -169,7 +174,27 @@ currentPage = {
 			}
 			if((currHeight + 31) < lastStats.last_known_block_index){
 				$('#next-page').removeClass('disabled');
-			}
+            }
+            //get dustfund balance
+            $.ajax({
+                url: api.replace("44016", "9095") + '/json_rpc',
+                method: "POST",
+                data: JSON.stringify({
+                    jsonrpc: "2.0",
+                    id: "test",
+                    method: "getBalance",
+                    params: {
+                        address: "PLeafjfpaRWEXR4artCAer4yZFzeq5mRrMaLByP7Rkf3FL1URKUrBnP3ppfL6LVgz4hJYwk6DebUxZq6aQKHa8eT5f1ycM7j7d",
+                        password: ""
+                    }
+                }),
+                dataType: 'json',
+                cache: 'false',
+                async: true,
+                success: function (data) {
+                    updateText('dustFundBalance', getReadableCoins(data.result.availableBalance, 2, true));
+                }
+            });
 		}
 };
 
@@ -206,7 +231,6 @@ $.ajax({
 			block = data.result.block;
 				updateText('totalCoins', getReadableCoins(block.alreadyGeneratedCoins,2));
                 updateText('emissionPercent', (block.alreadyGeneratedCoins / coinTotalSupply * 100).toFixed(4));
-                updateText('dustFundBalance', (0).toFixed(2)); //todo Update DustFund Balance from Blockchain... 
 				updateText('currentReward', getReadableCoins(block.baseReward,2));
 			}
 		});
@@ -247,30 +271,32 @@ $('#prev-page').click(function(e){
 	var currHeight = $('#blocks_rows').children().first().data('height');
 	var openHeight = (currHeight - 31 < 0) ? 0 : currHeight - 31;
 	
-	xhrGetBlocks = $.ajax({
-            url: api + '/json_rpc',
-            method: "POST",
-            data: JSON.stringify({
-                jsonrpc:"2.0",
-                id: "test",
-                method:"f_blocks_list_json",
-                params: {
-                    height: openHeight
-                }
-            }),
-            dataType: 'json',
-            cache: 'false',
-            success: function(data){
-				$('#blocks_rows').children().remove();
-				$.when(
-					renderBlocks(data.result.blocks)
-				).then(function() {
-					setTimeout(function(){
-						refreshChart();
-					}, 100)
-				});
+    xhrGetBlocks = $.ajax({
+        url: api + '/json_rpc',
+        method: "POST",
+        data: JSON.stringify({
+            jsonrpc: "2.0",
+            id: "test",
+            method: "f_blocks_list_json",
+            params: {
+                height: openHeight
             }
+        }),
+        dataType: 'json',
+        cache: 'false',
+        success: function (data) {
+            $('#blocks_rows').children().remove();
+            $.when(
+                renderBlocks(data.result.blocks)
+            ).then(function () {
+                setTimeout(function () {
+                    refreshChart();
+                }, 100)
+            });
+        }
     });
+
+    
 	e.preventDefault();
 	
 	if((currHeight + 31) > lastStats.last_known_block_index){
