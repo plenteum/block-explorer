@@ -166,7 +166,6 @@
                 $(existingRow).replaceWith(getTransactionRowElement(transaction, transactionJson));
             }
             else if (!existingRow){
-
                 var transactionElement = getTransactionRowElement(transaction, transactionJson);
                 $transactionsRows.append(transactionElement);
             }
