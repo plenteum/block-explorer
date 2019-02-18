@@ -14,17 +14,18 @@ var networkStat = {
      ["crypto9coin.cf/ple", "https://crypto9coin.cf:44019"],
      ["ple.optimusblue.com", "http://ple.optimusblue.com:8117"],
      ["plenteum.virtopia.ca", "https://ple.virtopia.ca"],
-     ["plenteum.clevery.xyz", "https://plenteum.clevery.xyz/api/"],
+     ["plenteum.clevery.xyz", "https://plenteum.clevery.xyz/api"],
      ["ple.llama.horse", "http://pool.llama.horse:44018"],
      ["the-miners.de/Plenteum", "http://173.212.249.18:8115"],
-	 ["youpool.io/PLE", "http://144.202.120.143:8111"],
-     ["plenteum.pool.private-locker.com", "https://plenteum.pool.private-locker.com/api/"],
-     ["plenteum.smartcoinpool.com", "https://plenteum.smartcoinpool.com:5140"]
+     ["plenteum.pool.private-locker.com", "https://plenteum.pool.private-locker.com/api"],
+     ["plenteum.smartcoinpool.com", "https://plenteum.smartcoinpool.com:5140"],
+     ["ple.cryptocoins-digging.space", "https://ple.cryptocoins-digging.space:8119"]
+
  ]
 };
 
 var networkStat2 = {
     "ple": [
-        [""]
+        ["ple.cryptopool.space", "https://ple.cryptopool.space/api"],
     ]
 };
