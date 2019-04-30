@@ -154,9 +154,9 @@ currentPage = {
 			renderLastBlock();
             updateText('networkHeight', localizeNumber(lastStats.height.toString()));
 
-            var forkDate = new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate(), (new Date()).getHours(), (new Date()).getMinutes() + ((130000 - lastStats.height) * 2));
+            var forkDate = new Date((new Date()).getFullYear(), (new Date()).getMonth(), (new Date()).getDate(), (new Date()).getHours(), (new Date()).getMinutes() + ((205000 - lastStats.height) * 2));
 
-            updateText('nextFork', lastStats.last_known_block_index < 130001 ? forkDate.toString() : "to be announced...");
+            updateText('nextFork', lastStats.last_known_block_index < 205001 ? forkDate.toString() : "to be announced...");
             updateText('networkTransactions', localizeNumber(lastStats.tx_count.toString()));
             updateText('networkHashrate', getReadableHashRateString(lastStats.difficulty / blockTargetInterval));
             updateText('networkDifficulty', getReadableDifficultyString(lastStats.difficulty, 0).toString());
